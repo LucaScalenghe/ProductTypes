@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Product types</title>
+<link href=".css.css" rel="stylesheet" type="text/css">
+<style>
+@media print {  /* adjusted to print the html to a single-page pdf */
+body {
+	font-size: 10pt;
+}
+</style>
+</head>
+<body>
+
+<h1>Product types</h1>
+
+The program simulates the operations between seller and customers. 
+All classes are found in the <b>operations</b> package. 
+The main class is <b>Operations</b>. 
+<p>
+The <b>TestApp</b> class in the <b>example</b> package contains examples and presents the main test cases but not all. 
+Exceptions are thrown using the <b>OException</b> class; 
+only the specified checks must be carried out and not all possible ones. 
+If a method throws an exception there is no change in the data present in the main class. 
+Suggestions: look at <i>TestApp</i> to understand the requirements of methods; every time you have implemented a method, run <i>TestApp</i> to check the result. 
+<p>
+The JDK documentation is accessible at URL 
+<a href="https://oop.polito.it/api/" class="uri">https://oop.polito.it/api/</a>.
+</p>
+
+<h2>R1: Products and prices</h2>
+
+
+New products can be added using method <b>int addProductType (String productType, int n, int price) throws OException</b> that has 3 parameters: the product type,
+the number of products belonging to the product type; the price, which is the same for a single product item.
+You can safely assume product types are unique labels that contain no spaces.
+The result is the overall price of all the products of the same product type.
+An exception is thrown if the product type is duplicated.
+<p>
+Method <b> int getNumberOfProducts (String productType) throws OException</b> gives the number of products belonging to the 
+given productType; an exception is thrown if the productType does not exist.
+<p>
+Method <b>groupingProductTypeByPrices()</b> groups the product types by increasing price. 
+The product types with same price are listed in alphabetical order.
+
+<h2>R2: Discounts and customer orders </h2>
+
+Method <b>int addDiscount (String customer, int discount)</b>
+allows the seller to add a discount to the indicated customer. 
+The same customer can receive more than one discount.
+The result is the total discount received by the customer.
+
+<p>
+Customers' orders can be placed using method <b>int customerOrder(String customer, String ptpn, int discount) throws OException</b> 
+that has 3 parameters: the customer, the products with the relative quantity, and the discount requested (which may also be 0).
+An example that can be found in TestApp is this one: <i>customerOrder("ctr1", "tableX:2 loungeChair:1", 20)</i>; this call
+allows customer <i>ctr1</i> to buy two tables (tableX is the name of the product type) and one loungeChair, a discount of 20 is requested.
+This string has two substrings separated by one space; a substring consists of a product type and the number of product items
+separated by <i>:</i>.
+The result is the total price: it consists of the sum of the prices of the products minus the discount (if greater than 0).
+<br>
+Possible problems to be managed:
+1) If not all the number of products requested are available the result is 0; the customer doesn't buy anything.
+2) If the requested discount exceeds the available discount for the customer, an exception is thrown.
+<br>
+In case of no problems, the number of products available is reduced by the number of products requested by the customer order. 
+In addition, the available discount is decremented by the requested discount; 
+the available discount is the discount that can be used by the next <i>customerOrder()</i> call.
+
+<p>
+
+Method <b>int getDiscountAvailable (String customer)</b> gives the available discount for the customer (it could be 0).
+
+<h2>R3: Evaluations and scores</h2>
+
+Method <b> int evalByCustomer (String customer, String productType, int score) throws OException </b>
+allows a customer to give a score in the range 4..10 to the product type. An exception is thrown if the customer: has not purchased any product of the indicated product type, has already given a score to the indicated product type, or the score is out of range.
+The result is the overall number of product types scores given by the customer.
+
+<p>
+
+Method <b> int getScoreFromProductType (String customer, String productType) throws OException </b>
+shows the score assigned by the customer to the indicated type of product. An exception is thrown if the customer has not assigned a score to that product type.
+
+<p>
+
+Method <b> groupingCustomersByScores(String productType) </b> groups customers by increasing scores relating to the type of product indicated. Customers are listed in alphabetical order.
+
+
+<h2>R4: Statistics</h2>
+
+Method <b>groupingCustomersByNumberOfProductsPurchased() </b> groups the customers by increasing number (greater than 0) of products purchased. Customers are listed in alphabetical order.
+Customers with no orders are not reported.
+
+<p>
+ 
+Method <b>largestExpenseForCustomer ()</b> provides the largest expense in an individual order for each customer (in increasing order).
+Customers with no orders are not reported.
+
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Tipologie prodotti</title>
+<link href=".css.css" rel="stylesheet" type="text/css">
+<style>
+@media print {  /* adjusted to print the html to a single-page pdf */
+body {
+	font-size: 10pt;
+}
+</style>
+</head>
+<body>
+
+<h1>Tipologie prodotti</h1>
+
+Sviluppare un programma che simula le operazioni tra un venditore e i consumatori. 
+Tutte le classi si trovano nel package <b>operations</b>. 
+La classe principale è <b>Operations</b>. 
+<p>
+La classe <b>TestApp</b> nel package <b>example</b> contiene degli esempi e fornisce i principali casi di test (ma non tutti). 
+Le eccezioni sono lanciate tramite la classe <b>OException</b>; 
+è richiesta la verifica solo delle condizioni esplicitamente specificate e non di tutte quelle possibili. 
+Se un metodo lancia un'eccezione non viene fatta nessuna modifica ai dati presenti nella classe principale.
+Suggerimento: guardare la classe <i>TestApp</i> per comprendere i requisiti dei metodi; dopo aver implementato ciascun metodo
+eseguire i test in <i>TestApp</i> per verificare l'esito.
+<p>
+LA documentazione JDK è disponibile all'indirizzo: 
+<a href="https://oop.polito.it/api/" class="uri">https://oop.polito.it/api/</a>.
+</p>
+
+
+<h2>R1: Prodotti e prezzi</h2>
+
+&Egrave; possibile aggiungere nuovi prodotti tramite il metodo <b>int addProductType (String productType, int n, int price) throws OException</b>
+che ha tre parametri: il tipo di prodotto, il numero di oggetti prodotto appartenenti al tipo, il prezzo di un singolo prodotto.
+&Egrave; possibile assumere che i tipi sono etichette uniche che non contengono spazi.
+Il risultato è il prezzo totale di tutti i prodotti dello stesso tipo.
+Viene lanciata un'eccezione in caso di duplicati.
+<p>
+Il metodo <b>int getNumberOfProducts (String productType) throws OException</b> restituisce il numero di prodotti di un dato tipo; 
+lancia un'eccezione se il tipo di prodotto non esiste. 
+<p>
+Il metodo <b>groupingProductTypeByPrices()</b> raggruppa i tipi dei prodotti per prezzo (crescente).
+I tipi con lo stesso prezzo sono listati un ordine alfabetico.
+
+
+<h2>R2: Sconti ed ordini dei clienti</h2>
+
+Il metodo <b>int addDiscount (String customer, int discount)</b>
+consente al venditore di aggiungere uno sconto per il cliente specificato.
+Lo stesso cliente può ricevere più sconti (additivi).
+Il risulto è il totale degli sconti permessi al cliente.
+<p>
+Gli ordini dei clienti possono essere inseriti tramite il metodo <b>int customerOrder(String customer, String ptpn, int discount) throws OException</b> 
+che ha tre parametri: il cliente, i prodotti con le relative quantità, e lo sconto richiesto (eventualmente anche 0).
+Un esempio di uso nella classe <i>TestApp</i> è il seguente: <i>customerOrder("ctr1", "tableX:2 loungeChair:1", 20)</i>;
+questa chiamata inserisce un ordine del cliente <i>ctr1</i> per due tavoli (tableX è il tipo di prodotto) ed una
+loungeChair, chiedendo uno sconto di 20.
+La stringa di specifica ha due sottostringhe separate da uno spazio, ogni sottostringa è formata dal tipo di prodotto e dal numero di 
+oggetti, separati da <i>:</i>.
+Il risultato è il prezzo totale, dato dalla somma dei prezzi di tutti i prodotti meno lo sconto.
+<br>
+Possibili casi problematici:
+1) se non tutte le quantità di prodtti sono disponibili il risultato è 0 e il cliente non acquista nulla.
+2) se lo sconto richiesto eccede lo sconto disponibile per il cliente, viene lanciata un'eccezione.
+<br>
+Se non ci sono problemi, il numero di prodotti è ridotto del numero di prodotti acquistati tramite l'ordine.
+Inoltre lo sconto disponibile per il cliente è decrementato dello sconto richiesto;
+lo sconto disponibile è quello che potrà essere usato nelle successive chiamta del metodo.
+
+<p>
+Il metodo <b>int getDiscountAvailable (String customer)</b> restituisce lo sconto disponibile per un cliente (può essere 0).
+
+
+<h2>R3: Valutazioni e punteggi</h2>
+
+Il metodo <b>int evalByCustomer (String customer, String productType, int score) throws OException</b>
+permette ad un cliente di dare un punteggio nell'intervallo 4..10 ad un certo tipo di prodotto.
+Viene lanciata un'eccezione se il cliente non ha mai acquistato quel tipo di prodotto
+oppure ha già assegnato un punteggio al tipo, o se il punteggio non è nell'intervallo consentito.  
+Il risutato è il numero di tipi di prodotto a cui il cliente ha assegnato un punteggio. 
+
+<p>
+
+Il metodo <b>int getScoreFromProductType (String customer, String productType) throws OException</b>
+mostra il punteggio asegnato da un cliente al prodotto dato.
+Viene lanciata un'eccezione se il cliente non ha mai assegnato un punteggio al tipo di prodotto. 
+
+<p>
+
+Il metodo <b> groupingCustomersByScores(String productType) </b> 
+raggruppa il clienti per punteggi crescenti assegnati al tipo di prodotto dato.
+I clienti con pari punteggio sono in una lista ordinata alfabeticamente.
+
+
+<h2>R4: Statistics</h2>
+
+Il metodo <b>groupingCustomersByNumberOfProductsPurchased()</b>
+raggruppa i clienti per numero crescente di oggetti comprati.
+A parità di numero, i clienti sono listati in ordine alfabetico.
+I clienti che non hanno effettuato ordini non sono riportati.
+
+<p>
+ 
+Il metodo <b>largestExpenseForCustomer ()</b>
+fornisce la maggior spesa in un singolo ordine per ciascun cliente (in ordine alfabetico).
+I clienti che non hanno effettuato ordini non sono riportati.
+ 
+
+</body>
+</html>
